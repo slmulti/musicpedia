@@ -28,7 +28,7 @@ function ArtistItem({ artist }) {
                     <h2 className="card-title">{artist.name}</h2>
                     <Link
                         className="text-base-conent text-opacity-40"
-                        to={`/user/`}
+                        to={`/artist/${artist.id}`}
                     >
                         Visit Profile
                     </Link>
