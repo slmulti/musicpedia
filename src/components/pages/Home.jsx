@@ -1,5 +1,6 @@
 import React from "react";
 import ArtistResults from "../layout/artists/ArtistResults";
+import ArtistSearch from "../layout/artists/ArtistSearch";
 
 function Home() {
     return (
@@ -9,6 +10,7 @@ function Home() {
                 Using the Spotify API you can search for Artists below to learn
                 about them and their Albums.
             </h1>
+            <ArtistSearch />
             <ArtistResults />
         </div>
     );

@@ -10,13 +10,22 @@ export const SpotifyProvider = ({ children }) => {
     const initialState = {
         accessToken: "",
         artists: [],
+        artist: {},
         loading: false,
     };
 
     const [state, dispatch] = useReducer(spotifyReducer, initialState);
 
-    const fetchArtists = async () => {
+    const searchArtists = async (text) => {
         setLoading();
+
+        //try and avoid using this as throws funny results
+        // const params = new URLSearchParams({
+        //     q: text,
+        // });
+        // console.log("params:", params);
+        // console.log("text", text);
+
         const authParameters = {
             method: "POST",
             headers: {
@@ -34,11 +43,11 @@ export const SpotifyProvider = ({ children }) => {
         // setAccessToken(tokenData.access_token); //had to use tokenData.access_token below because useState isnt working at the moment
         console.log(tokenData.access_token);
 
-        //search for artist with token
-        const searchQuery = "Foo+Fighters";
+        //search for artist with token for testing
+        // const searchQuery = "Foo+Fighters";
 
         const response = await fetch(
-            `https://api.spotify.com/v1/search?q=${searchQuery}&type=artist`,
+            `https://api.spotify.com/v1/search?q=${text}&type=artist`,
             {
                 headers: {
                     Authorization: `Bearer ${tokenData.access_token}`,
@@ -58,6 +67,10 @@ export const SpotifyProvider = ({ children }) => {
         });
     };
 
+    //clear artisit from state
+    const clearArtists = () => {
+        dispatch({ type: "CLEAR_ARTISTS" });
+    };
     //set loading
     const setLoading = () => dispatch({ type: "SET_LOADING" });
 
@@ -66,8 +79,10 @@ export const SpotifyProvider = ({ children }) => {
             value={{
                 accessToken: state.accessToken,
                 artists: state.artists,
+                artist: state.artist,
                 loading: state.loading,
-                fetchArtists,
+                searchArtists,
+                clearArtists,
             }}
         >
             {children}
