@@ -1,54 +1,22 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 import Spinner from "../../layout/Spinner";
 import ArtistItem from "./ArtistItem";
-
-const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-const CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
+import SpotifyContext from "../context/spotify/SpotifyContext";
 
 function ArtistResults() {
-    const [accessToken, setAccessToken] = useState("");
-    const [artists, setArtists] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { artists, loading, fetchArtists } = useContext(SpotifyContext);
 
     useEffect(() => {
         fetchArtists();
     }, []);
 
-    const fetchArtists = async () => {
-        const authParameters = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
-        };
-        const tokenResponse = await fetch(
-            "https://accounts.spotify.com/api/token",
-            authParameters
-        );
-        const tokenData = await tokenResponse.json();
-        console.log(tokenData);
-        setAccessToken(tokenData.access_token); //had to use tokenData.access_token below because useState isnt working at the moment
-        console.log(tokenData.access_token);
+    console.log("ARTISTS:", artists);
 
-        //search for artist with token
-        const searchQuery = "Foo+Fighters";
-
-        const response = await fetch(
-            `https://api.spotify.com/v1/search?q=${searchQuery}&type=artist`,
-            {
-                headers: {
-                    Authorization: `Bearer ${tokenData.access_token}`,
-                },
-            }
-        );
-        const artistData = await response.json();
-        console.log(artistData);
-        console.log(artistData.artists.items);
-        setArtists(artistData.artists.items);
-        setLoading(false);
-    };
+    //maybe not the best error handling???
+    if (!artists || !artists.length) {
+        return <div>No results found.</div>;
+    }
 
     if (!loading) {
         return (
