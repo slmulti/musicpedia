@@ -1,15 +1,11 @@
 import React from "react";
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import Spinner from "../../layout/Spinner";
 import ArtistItem from "./ArtistItem";
 import SpotifyContext from "../context/spotify/SpotifyContext";
 
 function ArtistResults() {
-    const { artists, loading, fetchArtists } = useContext(SpotifyContext);
-
-    useEffect(() => {
-        fetchArtists();
-    }, []);
+    const { artists, loading } = useContext(SpotifyContext);
 
     console.log("ARTISTS:", artists);
 

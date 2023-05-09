@@ -9,6 +9,8 @@ const spotifyReducer = (state, action) => {
             };
         case "SET_LOADING":
             return { ...state, loading: true };
+        case "CLEAR_ARTISTS":
+            return { ...state, artists: [] };
         default:
             return state;
     }
