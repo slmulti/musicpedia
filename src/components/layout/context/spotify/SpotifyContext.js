@@ -56,14 +56,52 @@ export const SpotifyProvider = ({ children }) => {
         );
         const artistData = await response.json();
         console.log(artistData);
-        console.log(artistData.artists.items);
+        console.log("key artisit data: ", artistData.artists.items);
         const KeyArtistData = artistData.artists.items;
+
         // setArtists(artistData.artists.items);
         // setLoading(false);
         dispatch({
             type: "GET_ARTISTS",
             accessTokenPayload: accessTokenData,
             payload: KeyArtistData,
+        });
+    };
+
+    //get single artist
+    const getArtist = async (id) => {
+        setLoading();
+        console.log("id from getArtist :", id);
+
+        const authParameters = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
+        };
+        const tokenResponse = await fetch(
+            "https://accounts.spotify.com/api/token",
+            authParameters
+        );
+        const tokenData = await tokenResponse.json();
+        const accessTokenData = tokenData.access_token;
+
+        const response = await fetch(
+            `https://api.spotify.com/v1/artists/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${tokenData.access_token}`,
+                },
+            }
+        );
+        const artistData = await response.json();
+        console.log("artistData: ", artistData);
+
+        dispatch({
+            type: "GET_ARTIST",
+            accessTokenPayload: accessTokenData,
+            payload: artistData,
         });
     };
 
@@ -82,6 +120,7 @@ export const SpotifyProvider = ({ children }) => {
                 artist: state.artist,
                 loading: state.loading,
                 searchArtists,
+                getArtist,
                 clearArtists,
             }}
         >
