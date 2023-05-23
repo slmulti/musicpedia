@@ -49,7 +49,21 @@ function Artist() {
                     />
                 </figure>
                 <div className="card-body">
-                    <h2 className="text-3xl card-title">{artist.name}</h2>
+                    {/* <h2 className="text-3xl card-title"></h2> */}
+                    <div className="width-full round-lg shadow-md bg-base-100 stats">
+                        <div className="stat">
+                            <div className="text-3xl card-title">
+                                {artist.name}
+                            </div>
+                        </div>
+                        <div className="card-actions justify-end">
+                            <button className="btn btn-primary h-full">
+                                <a href={artist.external_urls.spotify}>
+                                    Open in Spotify{" "}
+                                </a>
+                            </button>
+                        </div>
+                    </div>
                     <div className="width-full round-lg shadow-md bg-base-100 stats">
                         <div className="stat">
                             <div className="stat-title text-md">
@@ -74,9 +88,11 @@ function Artist() {
                                 Genres :
                                 <div className="text-lg stat-value">
                                     <ul className="capitalize">
-                                        {artist.genres.map((genre) => (
-                                            <li key={genre}>{genre}</li>
-                                        ))}
+                                        {artist.genres
+                                            .slice(0, 5)
+                                            .map((genre) => (
+                                                <li key={genre}>{genre}</li>
+                                            ))}
                                     </ul>
                                 </div>
                             </div>
@@ -86,9 +102,11 @@ function Artist() {
                                 Top Tracks :
                                 <div className="text-lg stat-value">
                                     <ul className="capitalize">
-                                        {artist.genres.map((genre) => (
-                                            <li key={genre}>{genre}</li>
-                                        ))}
+                                        {artist.genres
+                                            .slice(0, 5)
+                                            .map((genre) => (
+                                                <li key={genre}>{genre}</li>
+                                            ))}
                                     </ul>
                                 </div>
                             </div>
@@ -101,14 +119,14 @@ function Artist() {
                         ))}
                     </ul> */}
 
-                    <div className="card-actions justify-end">
+                    {/* <div className="card-actions justify-end">
                         <button className="btn btn-primary">
                             Spotify Link :{" "}
                             <a href={artist.external_urls.spotify}>
                                 {artist.external_urls.spotify}
                             </a>
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

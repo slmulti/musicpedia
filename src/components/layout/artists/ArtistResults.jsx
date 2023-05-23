@@ -16,7 +16,7 @@ function ArtistResults() {
 
     if (!loading) {
         return (
-            <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grif-cols-2">
+            <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grif-cols-2 ">
                 {artists.map((artist) => (
                     <ArtistItem key={artist.id} artist={artist} />
                 ))}

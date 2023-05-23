@@ -9,11 +9,11 @@ function ArtistItem({ artist }) {
     // console.log(firstImageUrl);
 
     return (
-        <div className="card shadow-md compact side bg-base-100">
-            <div className="flex-row items-centre space-x-4 card-body">
+        <div className="card shadow-md compact side bg-base-100 hover:scale-105">
+            <div className="flex-row justify-between space-x-4 card-body">
                 <div>
                     <div className="avatar">
-                        <div className="rounded-full shadow w-14 h-14">
+                        <div className="rounded-full shadow w-28 h-28">
                             <img
                                 src={
                                     firstImageUrl ||
@@ -24,8 +24,8 @@ function ArtistItem({ artist }) {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <h2 className="card-title">{artist.name}</h2>
+                <div className="text-right">
+                    <h2 className="card-title mb-8">{artist.name}</h2>
                     <Link
                         className="text-base-conent text-opacity-40"
                         to={`/artist/${artist.id}`}

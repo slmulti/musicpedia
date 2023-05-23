@@ -5,12 +5,25 @@ import { useParams } from "react-router-dom";
 function GetAlbumsByArtistID({ albums }) {
     //filtered albums only in uk market and remove singles
     console.log("Full return of albums", albums);
-    const filteredAlbums = albums.filter(
-        (obj) =>
-            obj.available_markets.includes("GB") &&
-            (obj.album_type.includes("album") ||
-                obj.album_type.includes("compilation"))
-    );
+    // const filteredAlbums = albums.filter(
+    //     (obj) =>
+    //         obj.available_markets.includes("GB") &&
+    //         (obj.album_type.includes("album") ||
+    //             obj.album_type.includes("compilation"))
+    // );
+    const filteredAlbums = albums
+        .filter(
+            (obj) =>
+                obj.available_markets.includes("GB") &&
+                (obj.album_type.includes("album") ||
+                    obj.album_type.includes("compilation"))
+        )
+        .filter((album, index, self) => {
+            const currentIndex = self.findIndex(
+                (a) => a.name.substring(0, 10) === album.name.substring(0, 10)
+            );
+            return currentIndex === index;
+        });
 
     console.log("Filtered return of Albums: ", filteredAlbums);
 
@@ -30,7 +43,8 @@ function GetAlbumsByArtistID({ albums }) {
                             <img src={album.images[1].url} alt={album.name} />
                         </figure>
                         <div className="card-body">
-                            <h2 className="text-lg text-center">
+                            {/* restricting name of album to 2 lines max */}
+                            <h2 className="text-base text-center line-clamp-2">
                                 {album.name}
                             </h2>
 
