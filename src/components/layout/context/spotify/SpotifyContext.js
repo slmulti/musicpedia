@@ -11,6 +11,7 @@ export const SpotifyProvider = ({ children }) => {
         accessToken: "",
         artists: [],
         artist: {},
+        albums: [],
         loading: false,
     };
 
@@ -56,7 +57,10 @@ export const SpotifyProvider = ({ children }) => {
         );
         const artistData = await response.json();
         console.log(artistData);
-        console.log("key artisit data: ", artistData.artists.items);
+        console.log(
+            "key artist data from searchArtists: ",
+            artistData.artists.items
+        );
         const KeyArtistData = artistData.artists.items;
 
         // setArtists(artistData.artists.items);
@@ -96,12 +100,54 @@ export const SpotifyProvider = ({ children }) => {
             }
         );
         const artistData = await response.json();
-        console.log("artistData: ", artistData);
+        console.log("single artistData: ", artistData);
 
         dispatch({
             type: "GET_ARTIST",
             accessTokenPayload: accessTokenData,
             payload: artistData,
+        });
+    };
+
+    //get all albums by an artist
+    const getAlbums = async (id) => {
+        setLoading();
+
+        const authParameters = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
+        };
+        const tokenResponse = await fetch(
+            "https://accounts.spotify.com/api/token",
+            authParameters
+        );
+        const tokenData = await tokenResponse.json();
+        const accessTokenData = tokenData.access_token;
+
+        const response = await fetch(
+            `https://api.spotify.com/v1/artists/${id}/albums?limit=50`,
+            {
+                headers: {
+                    Authorization: `Bearer ${tokenData.access_token}`,
+                },
+            }
+        );
+
+        //destructed the json object for only the info i want
+        const { items } = await response.json();
+        console.log("items", items);
+
+        // const artistsAlbumsData = await response.json();
+        // const artistsAlbumsDataItems = artistsAlbumsData.items;
+        // console.log("artistsAlbumsDataItems: ", artistsAlbumsDataItems);
+
+        dispatch({
+            type: "GET_ALBUMS",
+            accessTokenPayload: accessTokenData,
+            payload: items,
         });
     };
 
@@ -118,9 +164,11 @@ export const SpotifyProvider = ({ children }) => {
                 accessToken: state.accessToken,
                 artists: state.artists,
                 artist: state.artist,
+                albums: state.albums,
                 loading: state.loading,
                 searchArtists,
                 getArtist,
+                getAlbums,
                 clearArtists,
             }}
         >

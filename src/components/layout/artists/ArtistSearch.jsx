@@ -6,7 +6,8 @@ function ArtistSearch() {
     const [text, setText] = useState("");
 
     //pulling in context to hide or show clear button
-    const { artists, searchArtists, clearArtists } = useContext(SpotifyContext);
+    const { artists, searchArtists, clearArtists, getArtist, getAlbums } =
+        useContext(SpotifyContext);
     const { setAlert } = useContext(AlertContext);
 
     const handleChange = (e) => setText(e.target.value);

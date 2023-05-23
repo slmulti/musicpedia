@@ -7,7 +7,7 @@ import SpotifyContext from "../context/spotify/SpotifyContext";
 function ArtistResults() {
     const { artists, loading } = useContext(SpotifyContext);
 
-    console.log("ARTISTS:", artists);
+    console.log("ARTISTS from ArtistResults:", artists);
 
     //maybe not the best error handling???
     if (!artists || !artists.length) {

@@ -12,9 +12,9 @@ function About() {
                             Spotify API{" "}
                         </a>
                     </strong>
-                    for music Artists and there information. This project is
-                    part of the front end module in the SWE apprenticeship
-                    course by
+                    for music Artists and their Albums and additional
+                    information. This project is part of the front end module in
+                    the SWE apprenticeship course by
                     <strong>
                         <a href="https://www.multiverse.io/en-GB">
                             {" "}

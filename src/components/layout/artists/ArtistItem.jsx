@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 function ArtistItem({ artist }) {
     const firstImage = artist.images[0];
-    console.log("firstImage", firstImage);
+    // console.log("firstImage", firstImage);
     const firstImageUrl = artist.images.map((image) => image.url)[0]; //this is the only way i could get images
-    console.log(firstImageUrl);
+    // console.log(firstImageUrl);
 
     return (
         <div className="card shadow-md compact side bg-base-100">
