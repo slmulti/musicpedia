@@ -6,7 +6,7 @@ function Home() {
     return (
         <div>
             <h1 className="text-6xl pb-2">Hi There!</h1>
-            <h1 className="text-2xl">
+            <h1 className="text-2xl pb-2">
                 Using the Spotify API you can search for Artists below to learn
                 about them and their Albums.
             </h1>

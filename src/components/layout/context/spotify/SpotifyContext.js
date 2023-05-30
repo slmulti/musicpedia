@@ -12,6 +12,7 @@ export const SpotifyProvider = ({ children }) => {
         artists: [],
         artist: {},
         albums: [],
+        topTracks: [],
         loading: false,
     };
 
@@ -151,6 +152,51 @@ export const SpotifyProvider = ({ children }) => {
         });
     };
 
+    //get all top tracks by an artist
+    const getTopTracks = async (id) => {
+        setLoading();
+
+        const authParameters = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
+        };
+        const tokenResponse = await fetch(
+            "https://accounts.spotify.com/api/token",
+            authParameters
+        );
+        const tokenData = await tokenResponse.json();
+        const accessTokenData = tokenData.access_token;
+
+        const response = await fetch(
+            `https://api.spotify.com/v1/artists/${id}/top-tracks?market=GB`,
+            {
+                headers: {
+                    Authorization: `Bearer ${tokenData.access_token}`,
+                },
+            }
+        );
+
+        //destructed the json object for only the info i want
+        const { tracks } = await response.json();
+        console.log("Top Tracks from context:", tracks);
+
+        // const firstFiveTracks = tracks.slice(0, 5);
+        // console.log("first 5 tracks", firstFiveTracks);
+        // // const x = firstFiveTracks[0].name;
+        // // console.log("x", x);
+        // const trackName = firstFiveTracks.map((track) => track.name);
+        // console.log(trackName);
+
+        dispatch({
+            type: "GET_TOP_TRACKS",
+            accessTokenPayload: accessTokenData,
+            payload: tracks,
+        });
+    };
+
     //clear artisit from state
     const clearArtists = () => {
         dispatch({ type: "CLEAR_ARTISTS" });
@@ -165,10 +211,12 @@ export const SpotifyProvider = ({ children }) => {
                 artists: state.artists,
                 artist: state.artist,
                 albums: state.albums,
+                topTracks: state.topTracks,
                 loading: state.loading,
                 searchArtists,
                 getArtist,
                 getAlbums,
+                getTopTracks,
                 clearArtists,
             }}
         >

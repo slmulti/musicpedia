@@ -38,23 +38,32 @@ function GetAlbumsByArtistID({ albums }) {
                     //     </figure>
                     //     <h3>{album.name}</h3>
                     // </div>
-                    <div className="card card-compact w-48 bg-base-100 shadow-xl hover:scale-105 ">
-                        <figure>
-                            <img src={album.images[1].url} alt={album.name} />
-                        </figure>
-                        <div className="card-body">
-                            {/* restricting name of album to 2 lines max */}
-                            <h2 className="text-base text-center line-clamp-2">
-                                {album.name}
-                            </h2>
+                    <a
+                        href={album.external_urls.spotify}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <div className="card card-compact w-48 bg-base-100 shadow-xl hover:scale-105 ">
+                            <figure>
+                                <img
+                                    src={album.images[1].url}
+                                    alt={album.name}
+                                />
+                            </figure>
+                            <div className="card-body">
+                                {/* restricting name of album to 2 lines max */}
+                                <h2 className="text-base text-center line-clamp-2">
+                                    {album.name}
+                                </h2>
 
-                            {/* <div className="card-actions justify-end">
+                                {/* <div className="card-actions justify-end">
                                 <button className="btn btn-primary">
                                     Listen
                                 </button>
                             </div> */}
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 ))}
             </div>
         </div>

@@ -9,10 +9,10 @@ function ArtistResults() {
 
     console.log("ARTISTS from ArtistResults:", artists);
 
-    //maybe not the best error handling???
-    if (!artists || !artists.length) {
-        return <div>No results found.</div>;
-    }
+    // //maybe not the best error handling???
+    // if (!artists || !artists.length) {
+    //     return <div>No results found.</div>;
+    // }
 
     if (!loading) {
         return (

@@ -21,6 +21,13 @@ const spotifyReducer = (state, action) => {
                 loading: false,
                 accessToken: action.accessTokenPayload,
             };
+        case "GET_TOP_TRACKS":
+            return {
+                ...state,
+                topTracks: action.payload,
+                loading: false,
+                accessToken: action.accessTokenPayload,
+            };
         case "SET_LOADING":
             return { ...state, loading: true };
         case "CLEAR_ARTISTS":
