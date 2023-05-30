@@ -32,12 +32,6 @@ function GetAlbumsByArtistID({ albums }) {
             <h1 className="text-6xl mb-4">Albums</h1>
             <div className="grid grid-cols-2 gap-8 xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-3">
                 {filteredAlbums.map((album) => (
-                    // <div>
-                    //     <figure>
-                    //         <img src={album.images[1].url} alt={album.name} />
-                    //     </figure>
-                    //     <h3>{album.name}</h3>
-                    // </div>
                     <a
                         href={album.external_urls.spotify}
                         target="_blank"
@@ -50,17 +44,11 @@ function GetAlbumsByArtistID({ albums }) {
                                     alt={album.name}
                                 />
                             </figure>
-                            <div className="card-body">
+                            <div className="card-body h-20">
                                 {/* restricting name of album to 2 lines max */}
                                 <h2 className="text-base text-center line-clamp-2">
                                     {album.name}
                                 </h2>
-
-                                {/* <div className="card-actions justify-end">
-                                <button className="btn btn-primary">
-                                    Listen
-                                </button>
-                            </div> */}
                             </div>
                         </div>
                     </a>
