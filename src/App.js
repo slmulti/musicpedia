@@ -3,6 +3,7 @@ import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
 import About from "./components/pages/About";
 import NotFound from "./components/pages/NotFound";
+import AboutMe from "./components/pages/AboutMe";
 import Footer from "./components/layout/Footer";
 import React, { useState, useEffect } from "react";
 import { SpotifyProvider } from "./components/layout/context/spotify/SpotifyContext";
@@ -29,6 +30,7 @@ function App() {
                                     path="/notfound"
                                     element={<NotFound />}
                                 />
+                                <Route path="/aboutme" element={<AboutMe />} />
                                 <Route path="/*" element={<NotFound />} />
                             </Routes>
                             <Alert />

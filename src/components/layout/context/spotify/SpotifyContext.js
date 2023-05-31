@@ -18,15 +18,9 @@ export const SpotifyProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(spotifyReducer, initialState);
 
+    //search for multiple artists
     const searchArtists = async (text) => {
         setLoading();
-
-        //try and avoid using this as throws funny results
-        // const params = new URLSearchParams({
-        //     q: text,
-        // });
-        // console.log("params:", params);
-        // console.log("text", text);
 
         const authParameters = {
             method: "POST",
@@ -42,11 +36,7 @@ export const SpotifyProvider = ({ children }) => {
         const tokenData = await tokenResponse.json();
         console.log(tokenData);
         const accessTokenData = tokenData.access_token;
-        // setAccessToken(tokenData.access_token); //had to use tokenData.access_token below because useState isnt working at the moment
         console.log(tokenData.access_token);
-
-        //search for artist with token for testing
-        // const searchQuery = "Foo+Fighters";
 
         const response = await fetch(
             `https://api.spotify.com/v1/search?q=${text}&type=artist`,
@@ -58,14 +48,13 @@ export const SpotifyProvider = ({ children }) => {
         );
         const artistData = await response.json();
         console.log(artistData);
+
+        const KeyArtistData = artistData.artists.items;
         console.log(
             "key artist data from searchArtists: ",
             artistData.artists.items
         );
-        const KeyArtistData = artistData.artists.items;
 
-        // setArtists(artistData.artists.items);
-        // setLoading(false);
         dispatch({
             type: "GET_ARTISTS",
             accessTokenPayload: accessTokenData,
@@ -141,10 +130,6 @@ export const SpotifyProvider = ({ children }) => {
         const { items } = await response.json();
         console.log("items", items);
 
-        // const artistsAlbumsData = await response.json();
-        // const artistsAlbumsDataItems = artistsAlbumsData.items;
-        // console.log("artistsAlbumsDataItems: ", artistsAlbumsDataItems);
-
         dispatch({
             type: "GET_ALBUMS",
             accessTokenPayload: accessTokenData,
@@ -182,13 +167,6 @@ export const SpotifyProvider = ({ children }) => {
         //destructed the json object for only the info i want
         const { tracks } = await response.json();
         console.log("Top Tracks from context:", tracks);
-
-        // const firstFiveTracks = tracks.slice(0, 5);
-        // console.log("first 5 tracks", firstFiveTracks);
-        // // const x = firstFiveTracks[0].name;
-        // // console.log("x", x);
-        // const trackName = firstFiveTracks.map((track) => track.name);
-        // console.log(trackName);
 
         dispatch({
             type: "GET_TOP_TRACKS",

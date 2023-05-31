@@ -9,11 +9,6 @@ function ArtistResults() {
 
     console.log("ARTISTS from ArtistResults:", artists);
 
-    // //maybe not the best error handling???
-    // if (!artists || !artists.length) {
-    //     return <div>No results found.</div>;
-    // }
-
     if (!loading) {
         return (
             <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grif-cols-2 ">

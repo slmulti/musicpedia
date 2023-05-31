@@ -3,8 +3,6 @@ import { PropTypes } from "prop-types";
 import { Link } from "react-router-dom";
 
 function ArtistItem({ artist }) {
-    const firstImage = artist.images[0];
-    // console.log("firstImage", firstImage);
     const firstImageUrl = artist.images.map((image) => image.url)[0]; //this is the only way i could get images
     // console.log(firstImageUrl);
 
