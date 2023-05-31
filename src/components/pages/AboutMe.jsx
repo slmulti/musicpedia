@@ -19,19 +19,18 @@ function AboutMe() {
                         </div>
                         <div class="md:7/12 lg:w-6/12">
                             <h2 class="text-2xl text-gray-900 font-bold md:text-4xl">
-                                Hi!!! Im Simon 👋
+                                Hi!!! I'm Simon 👋
                             </h2>
                             <p class="mt-6 text-gray-600">
                                 I am an Apprentice at Barclays studying Software
                                 Engineering with Multiverse. I have been with
-                                the bank for 13 years and had many roles but
-                                this is my first experience in the Tech side of
-                                the bank.
+                                the Bank for 13 years and had many roles but
+                                this is my first experience On the Tech side.
                             </p>
                             <p class="mt-4 text-gray-600">
                                 {" "}
                                 Outside of work I enjoy Hiking, Photography and
-                                Gardening...Im only 34!!!!
+                                Gardening!!!!
                             </p>
                         </div>
                     </div>
