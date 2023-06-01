@@ -12,20 +12,15 @@ export const SpotifyProvider = ({ children }) => {
         artists: [],
         artist: {},
         albums: [],
+        topTracks: [],
         loading: false,
     };
 
     const [state, dispatch] = useReducer(spotifyReducer, initialState);
 
+    //search for multiple artists
     const searchArtists = async (text) => {
         setLoading();
-
-        //try and avoid using this as throws funny results
-        // const params = new URLSearchParams({
-        //     q: text,
-        // });
-        // console.log("params:", params);
-        // console.log("text", text);
 
         const authParameters = {
             method: "POST",
@@ -41,11 +36,7 @@ export const SpotifyProvider = ({ children }) => {
         const tokenData = await tokenResponse.json();
         console.log(tokenData);
         const accessTokenData = tokenData.access_token;
-        // setAccessToken(tokenData.access_token); //had to use tokenData.access_token below because useState isnt working at the moment
         console.log(tokenData.access_token);
-
-        //search for artist with token for testing
-        // const searchQuery = "Foo+Fighters";
 
         const response = await fetch(
             `https://api.spotify.com/v1/search?q=${text}&type=artist`,
@@ -57,14 +48,13 @@ export const SpotifyProvider = ({ children }) => {
         );
         const artistData = await response.json();
         console.log(artistData);
+
+        const KeyArtistData = artistData.artists.items;
         console.log(
             "key artist data from searchArtists: ",
             artistData.artists.items
         );
-        const KeyArtistData = artistData.artists.items;
 
-        // setArtists(artistData.artists.items);
-        // setLoading(false);
         dispatch({
             type: "GET_ARTISTS",
             accessTokenPayload: accessTokenData,
@@ -140,14 +130,48 @@ export const SpotifyProvider = ({ children }) => {
         const { items } = await response.json();
         console.log("items", items);
 
-        // const artistsAlbumsData = await response.json();
-        // const artistsAlbumsDataItems = artistsAlbumsData.items;
-        // console.log("artistsAlbumsDataItems: ", artistsAlbumsDataItems);
-
         dispatch({
             type: "GET_ALBUMS",
             accessTokenPayload: accessTokenData,
             payload: items,
+        });
+    };
+
+    //get all top tracks by an artist
+    const getTopTracks = async (id) => {
+        setLoading();
+
+        const authParameters = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
+        };
+        const tokenResponse = await fetch(
+            "https://accounts.spotify.com/api/token",
+            authParameters
+        );
+        const tokenData = await tokenResponse.json();
+        const accessTokenData = tokenData.access_token;
+
+        const response = await fetch(
+            `https://api.spotify.com/v1/artists/${id}/top-tracks?market=GB`,
+            {
+                headers: {
+                    Authorization: `Bearer ${tokenData.access_token}`,
+                },
+            }
+        );
+
+        //destructed the json object for only the info i want
+        const { tracks } = await response.json();
+        console.log("Top Tracks from context:", tracks);
+
+        dispatch({
+            type: "GET_TOP_TRACKS",
+            accessTokenPayload: accessTokenData,
+            payload: tracks,
         });
     };
 
@@ -165,10 +189,12 @@ export const SpotifyProvider = ({ children }) => {
                 artists: state.artists,
                 artist: state.artist,
                 albums: state.albums,
+                topTracks: state.topTracks,
                 loading: state.loading,
                 searchArtists,
                 getArtist,
                 getAlbums,
+                getTopTracks,
                 clearArtists,
             }}
         >
